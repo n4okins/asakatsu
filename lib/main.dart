@@ -1,9 +1,9 @@
-import 'package:asakatsu/components/coupon.dart';
-import 'package:asakatsu/components/navbar.dart';
+import 'package:asakatsu/components/screen_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,36 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: "人間情報システム演習のやつ"),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-          body: Center(
-            child: Column(
-              children: const [
-                CouponCard(couponID: "coupon2022"),
-                CouponCard(couponID: "coupon2022"),
-                CouponCard(couponID: "coupon2022"),
-              ]
-            ),
-          ),
-          bottomNavigationBar: const NavBar(),
-        ),
+      home: ScreenContainer(),
     );
   }
 }
