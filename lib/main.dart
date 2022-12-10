@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_size/window_size.dart';
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,9 +13,9 @@ void main() {
     DeviceOrientation.portraitUp
   ]);
 
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+  if (defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS) {
     setWindowTitle('Asakatsu');
-    setWindowMaxSize(const Size(1920, 1080));
+    setWindowMaxSize(const Size(1080, 1920));
     setWindowMinSize(const Size(576, 1024));
   }
 

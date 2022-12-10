@@ -1,10 +1,12 @@
+import 'package:asakatsu/components/popup.dart';
 import 'package:flutter/material.dart';
 import "package:asakatsu/model/coupon.dart";
+import 'package:asakatsu/components/buttons.dart';
 
 class CouponCard extends StatefulWidget {
-  final String couponID;
-  final String imageURL;
-  const CouponCard({Key? key, required this.couponID, required this.imageURL})
+  final Coupon coupon;
+
+  const CouponCard({Key? key, required this.coupon})
       : super(key: key);
 
   @override
@@ -13,15 +15,8 @@ class CouponCard extends StatefulWidget {
 
 class CouponCardState extends State<CouponCard> {
   @override
-  void initState() {
-    super.initState();
-
-  }
-  @override
   Widget build(BuildContext context) {
-    Coupon coupon = Coupon.fromJson(
-        {"coupon_id": widget.couponID, "image_url": widget.imageURL}
-    );
+    Coupon coupon = widget.coupon;
     return Column(
       children: <Widget>[
         Padding(
@@ -29,14 +24,12 @@ class CouponCardState extends State<CouponCard> {
           child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
               child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  minHeight: 224,
-                  minWidth: 320
-                ),
+                constraints:
+                    const BoxConstraints(minHeight: 224, minWidth: 320),
                 child: Container(
                     width: 300,
                     height: 216,
-                    color: const Color(0xffC8E6C9),
+                    color: coupon.isUsed ? Color(0xffeeeeee) : Color(0xffC8E6C9),
                     child: Column(
                       children: [
                         Padding(
@@ -48,28 +41,13 @@ class CouponCardState extends State<CouponCard> {
                                   fit: BoxFit.cover),
                             )),
                         Padding(
-                          padding: const EdgeInsets.only(top: 0),
-                          child: SizedBox(
-                            height: 35,
-                            width: 117,
-                            child: Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: MaterialButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    //角の丸み
-                                    side: const BorderSide(
-                                        color: Colors.black), //枠線の設定
-                                  ),
-                                  color: const Color(0xff74e39a),
-                                  onPressed: () {},
-                                  child: const Text(
-                                    "詳細",
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                )),
-                          ),
-                        ),
+                            padding: const EdgeInsets.only(top: 10),
+                            child: MyButton(
+                                child: coupon.isUsed ? Text("使用済み") : Text("詳細") ,
+                                color: coupon.isUsed ? Color(0xfff5f5f5) : Color(0xff74e39a),
+                                onPressed: () => couponInfoPopUp(context, coupon: coupon),
+                            )
+                        )
                       ],
                     )),
               )),

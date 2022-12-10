@@ -1,4 +1,5 @@
 import 'package:asakatsu/components/coupon_card.dart';
+import 'package:asakatsu/model/coupon.dart';
 import 'package:asakatsu/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -105,23 +106,11 @@ class _SearchCouponPageState extends ConsumerState<SearchCouponPage> {
                 child: SingleChildScrollView(
                   primary: true,
                   child: Column(
-                    children: const [
-                      CouponCard(
-                        couponID: "coupon2022",
-                        imageURL: "server/images/default.jpg",
-                      ),
-                      CouponCard(
-                        couponID: "coupon2022",
-                        imageURL: "server/images/001.jpg",
-                      ),
-                      CouponCard(
-                        couponID: "coupon2022",
-                        imageURL: "server/images/002.jpg",
-                      ),
-                      CouponCard(
-                        couponID: "coupon2022",
-                        imageURL: "server/images/003.jpg",
-                      ),
+                    children: [
+                      CouponCard(coupon: sampleCoupons[0]),
+                      CouponCard(coupon: sampleCoupons[1]),
+                      CouponCard(coupon: sampleCoupons[2]),
+                      CouponCard(coupon: sampleCoupons[3]),
                     ],
                   ),
                 ),
