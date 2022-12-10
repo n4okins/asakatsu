@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class NavIcon extends StatefulWidget {
   final IconData icon;
-  const NavIcon({Key? key, required this.icon})
+  final bool isActive;
+  const NavIcon({Key? key, required this.icon, this.isActive = false})
       : super(key: key);
 
   @override
@@ -22,7 +23,7 @@ class NavIconState extends State<NavIcon> {
         child: Text(
           String.fromCharCode(widget.icon.codePoint),
           style: TextStyle(
-            color: Colors.grey,
+            color: widget.isActive ? Colors.black : Colors.grey,
             fontSize: 48,
             fontWeight: FontWeight.w100,
             fontFamily: Icons.search.fontFamily,

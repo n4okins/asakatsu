@@ -1,5 +1,6 @@
 import 'package:asakatsu/components/coupon_card.dart';
 import 'package:asakatsu/model/coupon.dart';
+import 'package:asakatsu/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,6 +14,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final currentUserPoint = ref.watch(currentUserPointProvider);
     return MaterialApp(
       home: Scaffold(
           body: Column(children: [
@@ -46,11 +48,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                 Row(
                                                   mainAxisAlignment:
                                                   MainAxisAlignment.center,
-                                                  children: const [
+                                                  children: [
                                                     SizedBox(width: 10),
-                                                    Text("123",
+                                                    Text(
+                                                        "$currentUserPoint".padLeft(6),
                                                         style: TextStyle(
-                                                            fontSize: 64.0)),
+                                                            fontSize: 64.0
+                                                        )
+                                                    ),
                                                     SizedBox(width: 10),
                                                     Text("pt",
                                                         style: TextStyle(
@@ -96,9 +101,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                       primary: true,
                       child: Column(
                         children: [
-                          CouponCard(coupon: sampleCoupons[0]),
-                          CouponCard(coupon: sampleCoupons[1]),
-                          CouponCard(coupon: sampleCoupons[3]),
+                          for(final cp in gainCP)
+                            CouponCard(coupon: cp)
                         ],
                       ),
                     ),

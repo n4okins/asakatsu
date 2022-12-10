@@ -1,5 +1,6 @@
 import 'package:asakatsu/components/coupon_card.dart';
 import 'package:asakatsu/model/coupon.dart';
+import 'package:asakatsu/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,6 +14,7 @@ class HistoryPage extends ConsumerStatefulWidget {
 class _HistoryPageState extends ConsumerState<HistoryPage> {
   @override
   Widget build(BuildContext context) {
+    final currentUserPoint = ref.watch(currentUserPointProvider);
     return MaterialApp(
       home: Scaffold(
           body: Column(children: [
@@ -30,7 +32,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "123",
+                          "$currentUserPoint",
                           style: TextStyle(fontSize: 24),
                         ),
                         SizedBox(width: 10),
@@ -70,11 +72,9 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                                     children: [
                                       Expanded(
                                         flex: 1,
-                                        child: Text(
-                                            "11月",
+                                        child: Text("11月",
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 20)
-                                        ),
+                                            style: TextStyle(fontSize: 20)),
                                       ),
                                       SizedBox(height: 5),
                                       Expanded(
@@ -97,7 +97,9 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                 primary: true,
                 child: Column(
                   children: [
-                    CouponCard(coupon: sampleCoupons[2]),
+                    for (int i = 0; i < usedCP.length; i++) ...{
+                      CouponCard(coupon: usedCP[i])
+                    }
                   ],
                 ),
               ),

@@ -14,6 +14,9 @@ class SearchCouponPage extends ConsumerStatefulWidget {
 class _SearchCouponPageState extends ConsumerState<SearchCouponPage> {
   @override
   Widget build(BuildContext context) {
+    final searchWord = ref.watch(searchWordProvider);
+    final currentDisplayCoupon = ref.watch(currentDisplayCouponProvider);
+    final currentUserPoint = ref.watch(currentUserPointProvider);
     return MaterialApp(
       home: Scaffold(
         body: Column(children: [
@@ -31,7 +34,7 @@ class _SearchCouponPageState extends ConsumerState<SearchCouponPage> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "123",
+                            "$currentUserPoint",
                             style: TextStyle(fontSize: 24),
                           ),
                           SizedBox(width: 10),
@@ -58,14 +61,17 @@ class _SearchCouponPageState extends ConsumerState<SearchCouponPage> {
               padding: EdgeInsets.all(16),
               child: Scrollbar(
                   child: SingleChildScrollView(
-                child: Container(
+                child: Padding(
+                  padding: EdgeInsets.only(top:10, left: 30, right: 30, bottom: 20),
                     child: Column(
                   children: [
-                    Image.asset("server/images/default.jpg"),
-                    Text(
-                      "aaaaaaaaaaa\naaaaaaaaaaa\naaaaaaaaaaa\naaaaaaaaaaa\naaaaaaaaaaa\naaaaaaaaaaa\naaaaaaaaaaa\n",
-                      style: TextStyle(fontSize: 64),
-                    )
+                    currentDisplayCoupon == null ? Container() : Image.asset(currentDisplayCoupon.imageURL),
+                    currentDisplayCoupon == null ? Container() : Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Text(
+                      "${currentDisplayCoupon.description}",
+                      style: TextStyle(fontSize: 14),
+                    ))
                   ],
                 )),
               )),
@@ -107,10 +113,14 @@ class _SearchCouponPageState extends ConsumerState<SearchCouponPage> {
                   primary: true,
                   child: Column(
                     children: [
-                      CouponCard(coupon: sampleCoupons[0]),
-                      CouponCard(coupon: sampleCoupons[1]),
-                      CouponCard(coupon: sampleCoupons[2]),
-                      CouponCard(coupon: sampleCoupons[3]),
+                      for(final cp in publishedCP.where((c) => c.description.contains(searchWord)))
+                        InkWell(
+                          child: CouponCard(coupon: cp),
+                          onTap: () {
+                            ref.read(currentDisplayCouponProvider.notifier).state = cp;
+                          },
+                        )
+
                     ],
                   ),
                 ),

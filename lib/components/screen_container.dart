@@ -35,22 +35,23 @@ class ScreenContainer extends ConsumerWidget {
                     DisplayPage.values[selectIndex];
                 debugPrint("$displayPage, ${displayPage.index}");
               },
-              selectedItemColor: Colors.black,
-              unselectedItemColor: Colors.grey,
               showSelectedLabels: false,
               showUnselectedLabels: false,
               iconSize: 48,
               items: const [
                 BottomNavigationBarItem(
                   icon: NavIcon(icon: Icons.search_sharp),
+                  activeIcon: NavIcon(icon: Icons.search_sharp, isActive: true),
                   label: 'search',
                 ),
                 BottomNavigationBarItem(
                   icon: NavIcon(icon: Icons.home_outlined),
+                  activeIcon: NavIcon(icon: Icons.home_outlined, isActive: true),
                   label: 'home',
                 ),
                 BottomNavigationBarItem(
                   icon: NavIcon(icon: Icons.history_outlined),
+                  activeIcon: NavIcon(icon: Icons.history_outlined, isActive: true),
                   label: 'history',
                 )
               ],

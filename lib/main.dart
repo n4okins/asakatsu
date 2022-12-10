@@ -8,12 +8,12 @@ import 'package:flutter/foundation.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitDown,
-    DeviceOrientation.portraitUp
-  ]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
 
-  if (defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS) {
+  if (defaultTargetPlatform == TargetPlatform.windows ||
+      defaultTargetPlatform == TargetPlatform.linux ||
+      defaultTargetPlatform == TargetPlatform.macOS) {
     setWindowTitle('Asakatsu');
     setWindowMaxSize(const Size(1080, 1920));
     setWindowMinSize(const Size(576, 1024));
@@ -31,8 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Asakatsu",
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.blue, splashFactory: InkRipple.splashFactory),
       home: ScreenContainer(),
     );
   }
