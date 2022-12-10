@@ -14,16 +14,15 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Column(children: [
-          Expanded(
-              flex: 4,
-              child: Container(
-                  alignment: Alignment.center,
-                  child: Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+          body: Column(children: [
+            Expanded(
+                flex: 4,
+                child: Container(
+                    alignment: Alignment.center,
+                    child: Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(Radius.circular(16)),
                           child: Container(
                               width: 345,
                               height: 267,
@@ -45,7 +44,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                 const SizedBox(height: 10),
                                                 Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                  MainAxisAlignment.center,
                                                   children: const [
                                                     SizedBox(width: 10),
                                                     Text("123",
@@ -65,7 +64,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                               0.0, 64, 0.0),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                            MainAxisAlignment.end,
                                             children: const [
                                               Text("連続ログイン",
                                                   style: TextStyle(
@@ -85,37 +84,39 @@ class _HomePageState extends ConsumerState<HomePage> {
                                             ],
                                           )),
                                     ],
-                                  ))))))),
-          Expanded(
-              flex: 6,
-              child: Padding(
-                padding: EdgeInsets.only(top: 25),
-                child: Scrollbar(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: const [
-                        CouponCard(
-                          couponID: "coupon2022",
-                          imageURL: "server/images/default.jpg",
-                        ),
-                        CouponCard(
-                          couponID: "coupon2022",
-                          imageURL: "server/images/001.jpg",
-                        ),
-                        CouponCard(
-                          couponID: "coupon2022",
-                          imageURL: "server/images/002.jpg",
-                        ),
-                        CouponCard(
-                          couponID: "coupon2022",
-                          imageURL: "server/images/003.jpg",
-                        ),
-                      ],
+                                  ))),
+                        )))),
+            Expanded(
+                flex: 6,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 25),
+                  child: Scrollbar(
+                    child: SingleChildScrollView(
+                      primary: true,
+                      child: Column(
+                        children: const [
+                          CouponCard(
+                            couponID: "coupon2022",
+                            imageURL: "server/images/default.jpg",
+                          ),
+                          CouponCard(
+                            couponID: "coupon2022",
+                            imageURL: "server/images/001.jpg",
+                          ),
+                          CouponCard(
+                            couponID: "coupon2022",
+                            imageURL: "server/images/002.jpg",
+                          ),
+                          CouponCard(
+                            couponID: "coupon2022",
+                            imageURL: "server/images/003.jpg",
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ))
-        ]),
+                ))
+          ])
       ),
     );
   }
