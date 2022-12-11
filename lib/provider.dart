@@ -8,9 +8,11 @@ final displayPageProvider = StateProvider<DisplayPage>((ref) => DisplayPage.home
 final searchWordProvider = StateProvider<String>((ref) => "");
 final currentDisplayCouponProvider = StateProvider<Coupon?>((ref) => null);
 
-final currentUserPointProvider = StateProvider<int>((ref) => 100000);
+final currentUserPointProvider = StateProvider<int>((ref) => 500);
 
 final calendarDateProvider = StateProvider<DateTime>((ref) => DateTime.now());
+
+final shownLoginProvider = StateProvider<bool>((ref) => false);
 
 final allCouponProvider = StateProvider<List<Coupon>>(
         (ref) => [
@@ -49,9 +51,9 @@ final allCouponProvider = StateProvider<List<Coupon>>(
                 "coupon_id": "coupon2022-003",
                 "image_url": "server/images/003.jpg",
                 "code_url": "server/code/003.png",
-                "cost": 100,
+                "cost": 1000,
                 "coupon_status": CouponStatusType.gained,
-                "description": "ヨガ"
+                "description": "このクーポンは、有効期限内にお客様が「フィットネスジム・トシダイ」をご利用の際に、「30分 トレーニングコース」の料金を無料にするクーポンです。"
               }
           ),
           Coupon.fromJson(
@@ -61,7 +63,7 @@ final allCouponProvider = StateProvider<List<Coupon>>(
                 "code_url": "server/code/default.png",
                 "cost": 10,
                 "coupon_status": CouponStatusType.used,
-                "description": "コーヒー"
+                "description": "このクーポンは、有効期限内にお客様が「カフェ・エスプレッソ」で「アメリカンコーヒー」をご注文いただいた際に、100円を割引するクーポンです。"
               }
           ),
           Coupon.fromJson(
@@ -71,7 +73,7 @@ final allCouponProvider = StateProvider<List<Coupon>>(
                 "code_url": "server/code/001.png",
                 "cost": 100,
                 "coupon_status": CouponStatusType.published,
-                "description": "サラダ"
+                "description": "このクーポンは、有効期限内にお客様が「おいしいれすとらん デイビッド」で「今日のサラダ」をご注文いただいた際に、「サラダ」1皿分の金額を購入時に割引するクーポンです。"
               }
           ),
           Coupon.fromJson(
@@ -81,7 +83,7 @@ final allCouponProvider = StateProvider<List<Coupon>>(
                 "code_url": "server/code/002.png",
                 "cost": 100,
                 "coupon_status": CouponStatusType.used,
-                "description": "ハンバーグ"
+                "description": "このクーポンは、有効期限内にお客様が「ハンバーグ王国」で「ハンバーグ」をご注文いただいた際に、「ハンバーグ」1杯分の金額を購入時に割引するクーポンです。"
               }
           ),
           Coupon.fromJson(
@@ -89,9 +91,9 @@ final allCouponProvider = StateProvider<List<Coupon>>(
                 "coupon_id": "coupon2022-003",
                 "image_url": "server/images/003.jpg",
                 "code_url": "server/code/003.png",
-                "cost": 100,
+                "cost": 400,
                 "coupon_status": CouponStatusType.published,
-                "description": "ヨガ"
+                "description": "このクーポンは、有効期限内にお客様が「フィットネスジム・トシダイ」をご利用の際に、「30分 サウナ付きコース」の料金を半額にするクーポンです。"
               }
           ),
         ]

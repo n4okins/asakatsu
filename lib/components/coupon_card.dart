@@ -76,13 +76,9 @@ class CouponCardState extends ConsumerState<CouponCard> {
                     Expanded(
                       flex: 1,
                       child: greenButton(
-                        color: (currentUserPoint >= coupon.cost)
-                            ? Color(0xff74e39a)
-                            : Color(0xfff5f5f5),
                         child: Text("使う"),
                         onPressed: () {
-                          if (currentUserPoint >= coupon.cost) {
-                            coupon.couponStatus = CouponStatusType.used;
+                          coupon.couponStatus = CouponStatusType.used;
 
                             BuildContext context3;
                             showDialog<void>(
@@ -162,12 +158,10 @@ class CouponCardState extends ConsumerState<CouponCard> {
                                     ],
                                   ));
                                 });
+                            // 状態更新のやり方がわからない
+                            ref.read(currentUserPointProvider.notifier).state -= 10;
+                            ref.read(currentUserPointProvider.notifier).state += 10;
 
-                            ref.read(currentUserPointProvider.notifier).state -=
-                                coupon.cost;
-                          } else {
-                            null;
-                          }
                         },
                       ),
                     ),
@@ -206,15 +200,19 @@ class CouponCardState extends ConsumerState<CouponCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
-                              flex: 7,
+                              flex: 8,
                               child: Padding(
                                 padding: EdgeInsets.all(20),
-                                child: Text("${coupon.description}"),
+                                child: Scrollbar(
+                                child: SingleChildScrollView(
+                                  child: Text("【概要】\n${coupon.description}\n\n\n【交換必要ポイント】\n${coupon.cost}pt\n\n"),
+                                  ),
+                                ),
                               )),
                           Expanded(
                               flex: 4,
                               child: Padding(
-                                padding: EdgeInsets.all(20),
+                                padding: EdgeInsets.only(top:5, right: 20, left: 20, bottom: 15),
                                 child: Text(
                                     "ご利用は有効期限内に1度限りです。使用済みのクーポンを利用することはできません。"),
                               )),
