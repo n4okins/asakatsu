@@ -76,7 +76,7 @@ class CouponCardState extends ConsumerState<CouponCard> {
                     ),
                     Expanded(
                       flex: 1,
-                      child: MyButton(
+                      child: greenButton(
                         child: Text("使う"),
                         onPressed: () {
                           BuildContext context3;
@@ -198,7 +198,7 @@ class CouponCardState extends ConsumerState<CouponCard> {
                     ),
                     Expanded(
                       flex: 1,
-                      child: MyButton(
+                      child: greenButton(
                         color: (currentUserPoint >= coupon.cost)
                             ? Color(0xff74e39a)
                             : Color(0xfff5f5f5),
@@ -214,19 +214,6 @@ class CouponCardState extends ConsumerState<CouponCard> {
                                   return Dialogs(
                                       child: Column(
                                     children: [
-                                      Expanded(
-                                          flex: 1,
-                                          child: Container(
-                                            alignment: Alignment.centerRight,
-                                            child: IconButton(
-                                              icon: Icon(Icons.close),
-                                              onPressed: () {
-                                                Navigator.of(context3).pop();
-                                                Navigator.of(context2).pop();
-                                              },
-                                            ),
-                                          )
-                                      ),
                                       Expanded(
                                         flex: 3,
                                         child: Padding(
@@ -291,19 +278,18 @@ class CouponCardState extends ConsumerState<CouponCard> {
                                               flex: 3,
                                               child: Padding(
                                                 padding: EdgeInsets.only(
-                                                    bottom: 20,
                                                     right: 20,
                                                     left: 20),
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    MyButton(
+                                                    closeButton(
                                                       child: Text("閉じる"),
                                                       onPressed: () {
                                                         Navigator.of(context3).pop();
                                                         Navigator.of(context2).pop();
-                                                      }
+                                                      },
                                                     ),
                                                   ],
                                                 ),
@@ -362,7 +348,7 @@ class CouponCardState extends ConsumerState<CouponCard> {
                             )),
                         Padding(
                             padding: const EdgeInsets.only(top: 10),
-                            child: MyButton(
+                            child: greenButton(
                               child:
                                   coupon.couponStatus == CouponStatusType.used
                                       ? Text("使用済み")
