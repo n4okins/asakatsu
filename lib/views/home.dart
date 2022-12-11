@@ -36,8 +36,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ref.read(currentUserPointProvider.notifier).state +=
                           loginPoint;
                       debugPrint("${loginPoint}");
-                    }
-                    ;
+                    };
                     isLoading = false;
                   }),
                   builder: (context, snapshot) {
