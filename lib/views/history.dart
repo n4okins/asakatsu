@@ -1,3 +1,4 @@
+import 'package:asakatsu/components/calendar.dart';
 import 'package:asakatsu/components/coupon_card.dart';
 import 'package:asakatsu/model/coupon.dart';
 import 'package:asakatsu/provider.dart';
@@ -65,30 +66,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                             heightFactor: 0.9,
                             child: Container(
                               color: const Color(0xfff5f5f5),
-                              child: FractionallySizedBox(
-                                  widthFactor: 0.9,
-                                  heightFactor: 0.95,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Text("11月",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 20)),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Expanded(
-                                          flex: 7,
-                                          child: Container(
-                                              color: const Color(0xfffdfdfd),
-                                              alignment: Alignment.center,
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [Text("カレンダー")],
-                                              ))),
-                                      SizedBox(height: 10),
-                                    ],
-                                  )),
+                              child: Calendar(),
                             )))))),
         Expanded(
             flex: 5,

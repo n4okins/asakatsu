@@ -10,3 +10,5 @@ final currentDisplayCouponProvider = StateProvider<Coupon?>((ref) => null);
 
 final currentUserPointProvider = StateProvider<int>((ref) => 100000);
 
+final calendarDateProvider = StateProvider<DateTime>((ref) => DateTime.now());
+
