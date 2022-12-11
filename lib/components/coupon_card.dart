@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CouponCard extends ConsumerStatefulWidget {
   final Coupon coupon;
 
+
   const CouponCard({Key? key, required this.coupon}) : super(key: key);
 
   @override
@@ -55,7 +56,6 @@ class CouponCardState extends ConsumerState<CouponCard> {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-
                           Expanded(
                               flex: 8,
                               child: Padding(
@@ -79,6 +79,8 @@ class CouponCardState extends ConsumerState<CouponCard> {
                       child: greenButton(
                         child: Text("使う"),
                         onPressed: () {
+                          coupon.couponStatus = CouponStatusType.used;
+
                           BuildContext context3;
                           showDialog<void>(
                               context: context,
@@ -205,7 +207,8 @@ class CouponCardState extends ConsumerState<CouponCard> {
                         child: Text("交換する"),
                         onPressed: () {
                           if (currentUserPoint >= coupon.cost) {
-                            debugPrint("$currentUserPoint");
+                            coupon.couponStatus = CouponStatusType.gained;
+
                             BuildContext context3;
                             showDialog<void>(
                                 context: context,
@@ -301,6 +304,7 @@ class CouponCardState extends ConsumerState<CouponCard> {
                                     ],
                                   ));
                                 });
+
                             ref.read(currentUserPointProvider.notifier).state -=
                                 coupon.cost;
                           } else {

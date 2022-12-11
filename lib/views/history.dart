@@ -75,9 +75,8 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                 primary: true,
                 child: Column(
                   children: [
-                    for (int i = 0; i < usedCP.length; i++) ...{
-                      CouponCard(coupon: usedCP[i])
-                    }
+                    for (final cp in ref.read(allCouponProvider.notifier).state.where((c) => (c.couponStatus == CouponStatusType.used)))
+                      CouponCard(coupon: cp)
                   ],
                 ),
               ),

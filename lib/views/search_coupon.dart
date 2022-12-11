@@ -17,6 +17,8 @@ class _SearchCouponPageState extends ConsumerState<SearchCouponPage> {
     final searchWord = ref.watch(searchWordProvider);
     final currentDisplayCoupon = ref.watch(currentDisplayCouponProvider);
     final currentUserPoint = ref.watch(currentUserPointProvider);
+
+    final allCoupon = ref.read(allCouponProvider.notifier);
     return MaterialApp(
       home: Scaffold(
         body: Column(children: [
@@ -113,7 +115,7 @@ class _SearchCouponPageState extends ConsumerState<SearchCouponPage> {
                   primary: true,
                   child: Column(
                     children: [
-                      for(final cp in publishedCP.where((c) => c.description.contains(searchWord)))
+                      for(final cp in allCoupon.state.where((c) => (c.couponStatus == CouponStatusType.published && c.description.contains(searchWord))))
                         InkWell(
                           child: CouponCard(coupon: cp),
                           onTap: () {

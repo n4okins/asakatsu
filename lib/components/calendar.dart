@@ -2,16 +2,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:asakatsu/provider.dart';
 
-
 class DateTile extends ConsumerStatefulWidget {
   final int colIndex;
   final DateTime date;
   final bool stamp;
 
-  const DateTile({
-    super.key,
-    required this.colIndex, required this.date, this.stamp = false
-  });
+  const DateTile(
+      {super.key,
+      required this.colIndex,
+      required this.date,
+      this.stamp = false});
 
   @override
   ConsumerState<DateTile> createState() => _DateTileState();
@@ -25,7 +25,7 @@ class _DateTileState extends ConsumerState<DateTile> {
     bool isSameMonth = (widget.date.month == calendarDate.month);
 
     dateTileColor() {
-      switch (rowIndex){
+      switch (rowIndex) {
         case 6:
           return isSameMonth ? Color(0xffCCFFFF) : Color(0xffAADDDD);
 
@@ -37,23 +37,28 @@ class _DateTileState extends ConsumerState<DateTile> {
       }
     }
 
-
     return Container(
-      color: dateTileColor(),
-      child: Container(
-        decoration: widget.stamp ? BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-              width: 4,
-              color: Colors.green
-          ),
-        ) : null,
-        child: Text(
-          "${widget.date.day}",
-          style: TextStyle(color: (isSameMonth ? Colors.black : Colors.grey)),
-        ),
-      ),
-    );
+        color: dateTileColor(),
+        child: Stack(
+          children: [
+            Text(
+              "${widget.date.day}",
+              style:
+                  TextStyle(color: (isSameMonth ? Colors.black : Colors.grey)),
+            ),
+            Padding(
+              padding: EdgeInsets.all(4),
+              child: Container(
+                decoration: widget.stamp
+                    ? BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(width: 4, color: Colors.green),
+                      )
+                    : null,
+              ),
+            )
+          ],
+        ));
   }
 }
 
@@ -72,11 +77,11 @@ class _CalendarState extends ConsumerState<Calendar> {
       List<List<DateTime>> weekList = [];
 
       DateTime std = DateTime(calendarDate.year, calendarDate.month);
-      DateTime start = std.add(Duration(days: - (std.weekday % 7 + 1)));
+      DateTime start = std.add(Duration(days: -(std.weekday % 7 + 1)));
 
-      for(int i = 0; i < 5; i++){
+      for (int i = 0; i < 5; i++) {
         List<DateTime> dateList = [];
-        for(int j = 0; j < 7; j++){
+        for (int j = 0; j < 7; j++) {
           dateList.add(start.add(Duration(days: (i * 7) + j + 1)));
         }
         weekList.add(dateList);
@@ -85,10 +90,10 @@ class _CalendarState extends ConsumerState<Calendar> {
       return weekList;
     }
 
-    stampFn(DateTime date){
+    stampFn(DateTime date) {
       var now = DateTime.now();
       var diff = date.difference(DateTime(now.year, now.month, now.day)).inDays;
-      return -9 <= diff && diff <= 0;
+      return -7 <= diff && diff <= 0;
     }
 
     List<List<DateTime>> dateList = generateDateList();
@@ -100,40 +105,35 @@ class _CalendarState extends ConsumerState<Calendar> {
             Row(
               children: [
                 Expanded(
-                  flex:1 ,
+                  flex: 1,
                   child: IconButton(
                     icon: Icon(Icons.arrow_back_ios),
                     onPressed: () {
                       var date = ref.read(calendarDateProvider.notifier).state;
-                      ref.read(calendarDateProvider.notifier).state = DateTime(date.year, date.month - 1);
+                      ref.read(calendarDateProvider.notifier).state =
+                          DateTime(date.year, date.month - 1);
                     },
                   ),
                 ),
-                Expanded(
-                  flex: 2,
-                    child: Container()
-                ),
+                Expanded(flex: 2, child: Container()),
                 Expanded(
                   flex: 4,
-                  child: Text("${calendarDate.year}年 ${calendarDate.month}月",
+                  child: Text("${calendarDate.month}月",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 20)),
                 ),
+                Expanded(flex: 2, child: Container()),
                 Expanded(
-                    flex: 2,
-                    child: Container()
-                ),
-                Expanded(
-                  flex: 1 ,
+                  flex: 1,
                   child: IconButton(
                     icon: Icon(Icons.arrow_forward_ios),
                     onPressed: () {
                       var date = ref.read(calendarDateProvider.notifier).state;
-                      ref.read(calendarDateProvider.notifier).state = DateTime(date.year, date.month + 1);
+                      ref.read(calendarDateProvider.notifier).state =
+                          DateTime(date.year, date.month + 1);
                     },
                   ),
                 ),
-
               ],
             ),
             SizedBox(height: 5),
@@ -142,7 +142,7 @@ class _CalendarState extends ConsumerState<Calendar> {
                 child: Container(
                   color: const Color(0xfff5f5f5),
                   alignment: Alignment.center,
-                  child:  Column(children: [
+                  child: Column(children: [
                     for (int i = 0; i < 5; i++) ...{
                       Expanded(
                         flex: 1,
@@ -156,9 +156,9 @@ class _CalendarState extends ConsumerState<Calendar> {
                                     child: AspectRatio(
                                       aspectRatio: 1,
                                       child: DateTile(
-                                          colIndex: i,
-                                          stamp: stampFn(dateList[i][j]),
-                                          date: dateList[i][j],
+                                        colIndex: i,
+                                        stamp: stampFn(dateList[i][j]),
+                                        date: dateList[i][j],
                                       ),
                                     ),
                                   ))

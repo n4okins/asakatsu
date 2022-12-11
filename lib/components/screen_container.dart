@@ -33,7 +33,6 @@ class ScreenContainer extends ConsumerWidget {
               onTap: (int selectIndex) {
                 ref.read(displayPageProvider.notifier).state =
                     DisplayPage.values[selectIndex];
-                debugPrint("$displayPage, ${displayPage.index}");
               },
               showSelectedLabels: false,
               showUnselectedLabels: false,

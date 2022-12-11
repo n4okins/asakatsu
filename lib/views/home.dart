@@ -15,6 +15,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final currentUserPoint = ref.watch(currentUserPointProvider);
+    final allCoupon = ref.read(allCouponProvider.notifier);
+
+    getGainedCP(){
+      setState(() {});
+      return allCoupon.state.where((c) => (c.couponStatus == CouponStatusType.gained));
+    }
+
     return MaterialApp(
       home: Scaffold(
           body: Column(children: [
@@ -101,7 +108,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       primary: true,
                       child: Column(
                         children: [
-                          for(final cp in gainCP)
+                          for(final cp in getGainedCP())
                             CouponCard(coupon: cp)
                         ],
                       ),
