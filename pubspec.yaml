@@ -34,6 +34,7 @@ flutter:
   assets:
     - server/images/
     - server/code/
+    - server/animations/
 
 flutter_icons:
   android: "launcher_icon"

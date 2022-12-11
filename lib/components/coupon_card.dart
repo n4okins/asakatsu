@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CouponCard extends ConsumerStatefulWidget {
   final Coupon coupon;
 
-
   const CouponCard({Key? key, required this.coupon}) : super(key: key);
 
   @override
@@ -20,6 +19,7 @@ class CouponCardState extends ConsumerState<CouponCard> {
   Widget build(BuildContext context) {
     Coupon coupon = widget.coupon;
     final currentUserPoint = ref.watch(currentUserPointProvider);
+
     generateButtonPressed() {
       switch (coupon.couponStatus) {
         case CouponStatusType.used:
@@ -34,15 +34,14 @@ class CouponCardState extends ConsumerState<CouponCard> {
                     child: Column(
                   children: [
                     Expanded(
-                      flex: 1,
-                      child: Container(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () => Navigator.of(context2).pop(),
-                        ),
-                      )
-                  ),
+                        flex: 1,
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () => Navigator.of(context2).pop(),
+                          ),
+                        )),
                     Expanded(
                       flex: 3,
                       child: Padding(
@@ -77,73 +76,98 @@ class CouponCardState extends ConsumerState<CouponCard> {
                     Expanded(
                       flex: 1,
                       child: greenButton(
+                        color: (currentUserPoint >= coupon.cost)
+                            ? Color(0xff74e39a)
+                            : Color(0xfff5f5f5),
                         child: Text("使う"),
                         onPressed: () {
-                          coupon.couponStatus = CouponStatusType.used;
+                          if (currentUserPoint >= coupon.cost) {
+                            coupon.couponStatus = CouponStatusType.used;
 
-                          BuildContext context3;
-                          showDialog<void>(
-                              context: context,
-                              builder: (_) {
-                                context3 = _;
-                                return Dialogs(
-                                    child: Column(
-                                  children: [
-                                    Expanded(
-                                        flex: 1,
+                            BuildContext context3;
+                            showDialog<void>(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (_) {
+                                  context3 = _;
+                                  return Dialogs(
+                                      child: Column(
+                                    children: [
+                                      Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            alignment: Alignment.centerRight,
+                                            child: IconButton(
+                                              icon: Icon(Icons.close),
+                                              onPressed: () {
+                                                Navigator.of(context2).pop();
+                                                Navigator.of(context3).pop();
+                                              },
+                                            ),
+                                          )),
+                                      Expanded(
+                                          flex: 3,
+                                          child: FractionallySizedBox(
+                                            heightFactor: 0.7,
+                                            child: Image.asset(coupon.codeURL,
+                                                fit: BoxFit.fill),
+                                          )),
+                                      Expanded(
+                                        flex: 6,
                                         child: Container(
-                                          alignment: Alignment.centerRight,
-                                          child: IconButton(
-                                            icon: Icon(Icons.close),
-                                            onPressed: (){
-                                              Navigator.of(context3).pop();
-                                              Navigator.of(context2).pop();
-                                            },
-                                          ),
-                                        )
-                                    ),
-                                    Expanded(
-                                        flex: 3,
-                                        child: FractionallySizedBox(
-                                          heightFactor: 0.7,
-                                          child: Image.asset(coupon.codeURL,
-                                              fit: BoxFit.fill),
-                                        )),
-                                    Expanded(
-                                      flex: 6,
-                                      child: Container(
-                                          child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: const [
-                                          SizedBox(height: 30),
-                                          Expanded(
-                                              flex: 2,
-                                              child: Text("この画面をお店の方に見せてください。",
-                                                  textAlign: TextAlign.center)),
-                                          Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                "【注意事項】",
-                                                style: TextStyle(fontSize: 36),
+                                            child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                              flex: 7,
+                                              child: Container(
+                                                  child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: const [
+                                                  SizedBox(height: 30),
+                                                  Expanded(
+                                                      flex: 2,
+                                                      child: Text(
+                                                          "この画面をお店の方に見せてください。",
+                                                          textAlign: TextAlign
+                                                              .center)),
+                                                  Expanded(
+                                                      flex: 2,
+                                                      child: Text(
+                                                        "【注意事項】",
+                                                        style: TextStyle(
+                                                            fontSize: 36),
+                                                      )),
+                                                  Expanded(
+                                                      flex: 6,
+                                                      child: Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  10),
+                                                          child: Text(
+                                                            "本画面を閉じると、\n本クーポンは自動的に使用済みになります。",
+                                                            style: TextStyle(
+                                                                fontSize: 24),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ))),
+                                                ],
                                               )),
-                                          Expanded(
-                                            flex: 5,
-                                            child: Padding(
-                                                padding: EdgeInsets.all(10),
-                                                child: Text(
-                                                  "本画面を閉じると、\n本クーポンは自動的に使用済みになります。",
-                                                  style:
-                                                      TextStyle(fontSize: 24),
-                                                  textAlign: TextAlign.center,
-                                                )),
-                                          )
-                                        ],
-                                      )),
-                                    ),
-                                  ],
-                                ));
-                              });
+                                            ),
+                                          ],
+                                        )),
+                                      ),
+                                    ],
+                                  ));
+                                });
+
+                            ref.read(currentUserPointProvider.notifier).state -=
+                                coupon.cost;
+                          } else {
+                            null;
+                          }
                         },
                       ),
                     ),
@@ -167,8 +191,7 @@ class CouponCardState extends ConsumerState<CouponCard> {
                             icon: Icon(Icons.close),
                             onPressed: () => Navigator.of(context2).pop(),
                           ),
-                        )
-                    ),
+                        )),
                     Expanded(
                       flex: 3,
                       child: Padding(
@@ -212,6 +235,7 @@ class CouponCardState extends ConsumerState<CouponCard> {
                             BuildContext context3;
                             showDialog<void>(
                                 context: context,
+                                barrierDismissible: false,
                                 builder: (_) {
                                   context3 = _;
                                   return Dialogs(
@@ -270,9 +294,14 @@ class CouponCardState extends ConsumerState<CouponCard> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text("${currentUserPoint}", style: TextStyle(fontSize: 32)),
+                                                    Text("${currentUserPoint}",
+                                                        style: TextStyle(
+                                                            fontSize: 32)),
                                                     Icon(Icons.arrow_right_alt),
-                                                    Text("${currentUserPoint - coupon.cost}", style: TextStyle(fontSize: 32)),
+                                                    Text(
+                                                        "${currentUserPoint - coupon.cost}",
+                                                        style: TextStyle(
+                                                            fontSize: 32)),
                                                   ],
                                                 ),
                                               ),
@@ -281,8 +310,7 @@ class CouponCardState extends ConsumerState<CouponCard> {
                                               flex: 3,
                                               child: Padding(
                                                 padding: EdgeInsets.only(
-                                                    right: 20,
-                                                    left: 20),
+                                                    right: 20, left: 20),
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -290,8 +318,10 @@ class CouponCardState extends ConsumerState<CouponCard> {
                                                     closeButton(
                                                       child: Text("閉じる"),
                                                       onPressed: () {
-                                                        Navigator.of(context3).pop();
-                                                        Navigator.of(context2).pop();
+                                                        Navigator.of(context3)
+                                                            .pop();
+                                                        Navigator.of(context2)
+                                                            .pop();
                                                       },
                                                     ),
                                                   ],
